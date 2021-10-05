@@ -2,9 +2,9 @@
 
 This simple module is an example of how you can mount some web routes inside of Ignition.
 
-You can access either of the two routes that I have shown in here at either http(s)://{Your Ignition server}:{port}/data/{moduleID}/jimender2/helloworld or http(s)://{Your Ignition server}:{port}/data/{moduleID}/jimender2/:name
+You can access either of the two routes that I have shown in here at either `http(s)://{Your Ignition server}:{port}/data/{moduleID}/jimender2/helloworld` or `http(s)://{Your Ignition server}:{port}/data/{moduleID}/jimender2/:name`
 
-In this case the moduleID is net.jimender2.ignition.webroute so the full path is http(s)://{Your Ignition server}:{port}/data/net.jimender2.ignition.webroute/jimender2/helloworld or http(s)://{Your Ignition server}:{port}/data/net.jimender2.ignition.webroute/jimender2/:name
+In this case the moduleID is net.jimender2.ignition.webroute so the full path is `http(s)://{Your Ignition server}:{port}/data/net.jimender2.ignition.webroute/jimender2/helloworld` or `http(s)://{Your Ignition server}:{port}/data/net.jimender2.ignition.webroute/jimender2/:name`
 
 
 If you take a look in the code of the `mountRouteHandlers` you can see a function that does all the hard work.
@@ -15,11 +15,11 @@ If you take a look in the code of the `mountRouteHandlers` you can see a functio
             .restrict(WicketAccessControl.STATUS_SECTION)
             .mount();
 
-The `routes.newRoute` is the real heavy lifter in this.  This defines the route that you want.  This path will always come after /data/{moduleID}
+The `routes.newRoute()` is the real heavy lifter in this.  This defines the route that you want.  This path will always come after /data/{moduleID}
 
-The `.handler` is the part that lets you handle the data that you recieve.  In most cases this is a lambda function that calls a function elsewhere in your module.  You can pass parameters and get them back out similar to what we do in the current handler.
+The `.handler()` is the part that lets you handle the data that you recieve.  In most cases this is a lambda function that calls a function elsewhere in your module.  You can pass parameters and get them back out similar to what we do in the current handler.
 
-The `.type` lets you return one of the following types.  This is an optional parameter.
+The `.type()` lets you return one of the following types.  This is an optional parameter.
 
 	TYPE_IMG_SVG_XML	 
 	TYPE_JSON	 
@@ -29,10 +29,17 @@ The `.type` lets you return one of the following types.  This is an optional par
 	TYPE_XML	 
 	TYPE_ZIP
 
-The `.restrict` lets you restrict who can access this to two types of people (may be more but unsure).  It can either be people who have access to the config section of the Ignition gateway and people who have access to the status section of Ignition.  By ommitting this, anyone has access to it.
+The `.restrict()` lets you restrict who can access this to two types of people (may be more but unsure).  It can either be people who have access to the config section of the Ignition gateway and people who have access to the status section of Ignition.  By ommitting this, anyone has access to it.
 
-The `.mount` actually mounts the route.
-	
-#### Note
+The `.mount()` actually mounts the route.
+
+### Build
+To build, maven should be installed and then you can run `mvn install` to build the module.
+
+Once there you can access the unsgned module from the `webroute-build/target/Webroute-unsigned.modl` file.
+
+From there you need to sign the module using Ignition's module signer jar and a custom cert.  The best way to do this is to make a self signed cert using the java Keystore Explorer.
+
+##### Note
 
 While this example covers a lot, this is not a full tutorial and there may be some mistakes in it.
